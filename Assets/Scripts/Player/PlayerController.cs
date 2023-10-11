@@ -3,10 +3,12 @@ using UnityEngine;
 namespace SpaceShooter
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerController : MonoBehaviour
+    public sealed class PlayerController : MonoBehaviour
     {
-        [SerializeField] float _throttlePower = 6.0f;
-        [SerializeField] float _rotationPower = 4.0f;
+        const float SLOWDOWNFACTOR = 1.005f;
+
+        [SerializeField] float _throttlePower = 5.0f;
+        [SerializeField] float _rotationPower = 5.0f;
 
         Rigidbody2D _rigidbody2D;
 
@@ -20,6 +22,11 @@ namespace SpaceShooter
             if (Input.GetKey(KeyCode.UpArrow))
             {
                 _rigidbody2D.AddForce(transform.up * _throttlePower, ForceMode2D.Force);
+            }
+            else
+            {
+                // Gradually slow down if no force is applied
+                _rigidbody2D.velocity /= SLOWDOWNFACTOR;
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))
