@@ -4,7 +4,7 @@ namespace SpaceShooter
 {
     public sealed class Enemy : MonoBehaviour, IDamageable
     {
-        [SerializeField] int _health = 100;
+        [SerializeField] int _health = 1;
         [SerializeField] float _speed = 1.0f;
 
         Transform _player;
@@ -21,7 +21,12 @@ namespace SpaceShooter
 
         public void TakeDamage(int amount)
         {
-            throw new System.NotImplementedException();
+            _health -= amount;
+
+            if (_health <= 0) 
+            { 
+                Destroy(gameObject);
+            }
         }
     }
 }
