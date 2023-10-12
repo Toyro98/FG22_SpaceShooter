@@ -9,7 +9,7 @@ namespace SpaceShooter
 
         Vector2 _velocity = Vector2.zero;
 
-        void FixedUpdate()
+        void LateUpdate()
         {
             transform.position = Vector2.SmoothDamp(transform.position, _target.position, ref _velocity, _damping, 5f);
             transform.position = new Vector3(transform.position.x, transform.position.y, -10f);

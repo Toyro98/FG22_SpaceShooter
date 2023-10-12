@@ -5,12 +5,16 @@ namespace SpaceShooter
     [RequireComponent(typeof(Rigidbody2D))]
     public sealed class PlayerController : MonoBehaviour
     {
-        const float SLOWDOWNFACTOR = 1.005f;
-
+        [Header("Movement")]
         [SerializeField] float _throttlePower = 5.0f;
         [SerializeField] float _rotationPower = 5.0f;
 
+        [Header("Shooting")]
+        [SerializeField] float _fireRate = 0.2f;
+        [SerializeField] Projectile _projectilePrefab;
+
         Rigidbody2D _rigidbody2D;
+        float _lastTimeFired = 0.0f;
 
         void Start()
         {
@@ -19,14 +23,15 @@ namespace SpaceShooter
 
         void FixedUpdate()
         {
+            Movement();
+            Shooting();
+        }
+
+        void Movement()
+        {
             if (Input.GetKey(KeyCode.UpArrow))
             {
                 _rigidbody2D.AddForce(transform.up * _throttlePower, ForceMode2D.Force);
-            }
-            else
-            {
-                // Gradually slow down if no force is applied
-                _rigidbody2D.velocity /= SLOWDOWNFACTOR;
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))
@@ -37,6 +42,22 @@ namespace SpaceShooter
             {
                 _rigidbody2D.AddTorque(-_rotationPower, ForceMode2D.Force);
             }
+        }
+
+        void Shooting()
+        {
+            if (!Input.GetKey(KeyCode.Space))
+            {
+                return;
+            }
+
+            if (Time.timeSinceLevelLoad - _lastTimeFired < _fireRate)
+            {
+                return;
+            }
+
+            _lastTimeFired = Time.timeSinceLevelLoad;
+            Instantiate(_projectilePrefab, transform.position, transform.localRotation);
         }
     }
 }

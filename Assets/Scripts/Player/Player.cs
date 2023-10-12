@@ -4,9 +4,9 @@ namespace SpaceShooter
 {
     public sealed class Player : MonoBehaviour, IDamageable
     {
-        [SerializeField] int _health = 100;
+        // [SerializeField] int _health = 10;
 
-        void Awake()
+        void Start()
         {
             GameManager.Instance.Player = this;
         }
