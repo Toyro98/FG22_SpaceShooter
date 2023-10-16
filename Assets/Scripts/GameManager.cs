@@ -7,6 +7,7 @@ namespace SpaceShooter
         public static GameManager Instance { get; private set; }
 
         public Player Player;
+        public WaveManager WaveManager;
 
         void Awake()
         {

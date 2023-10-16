@@ -6,28 +6,28 @@ namespace SpaceShooter
     public sealed class PlayerController : MonoBehaviour
     {
         [Header("Movement")]
-        [SerializeField] float _throttlePower = 5.0f;
-        [SerializeField] float _rotationPower = 5.0f;
+        [SerializeField] private float _throttlePower = 5.0f;
+        [SerializeField] private float _rotationPower = 5.0f;
 
         [Header("Shooting")]
-        [SerializeField] float _fireRate = 0.2f;
-        [SerializeField] Projectile _projectilePrefab;
+        [SerializeField] private float _fireRate = 0.1f;
+        [SerializeField] private Projectile _projectilePrefab;
 
-        Rigidbody2D _rigidbody2D;
-        float _lastTimeFired = 0.0f;
+        private Rigidbody2D _rigidbody2D;
+        private float _lastTimeFired = 0.0f;
 
-        void Start()
+        private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             Movement();
             Shooting();
         }
 
-        void Movement()
+        private void Movement()
         {
             if (Input.GetKey(KeyCode.UpArrow))
             {
@@ -44,7 +44,7 @@ namespace SpaceShooter
             }
         }
 
-        void Shooting()
+        private void Shooting()
         {
             if (!Input.GetKey(KeyCode.Space))
             {

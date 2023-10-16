@@ -5,10 +5,10 @@ namespace SpaceShooter
     [RequireComponent(typeof(Rigidbody2D))]
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] float _speed = 75.0f;
-        [SerializeField] int _damage = 10;
+        [SerializeField] private float _speed = 100.0f;
+        [SerializeField] private int _damage = 10;
 
-        void Update()
+        private void Update()
         {
             transform.position += _speed * Time.deltaTime * transform.up;
         }
