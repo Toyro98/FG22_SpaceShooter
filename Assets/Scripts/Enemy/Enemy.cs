@@ -10,20 +10,22 @@ namespace SpaceShooter
 
         private Player _player;
 
-        void Start()
+        private void Start()
         {
             _player = GameManager.Instance.Player;
         }
 
-        void Update()
+        private void FixedUpdate()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, Time.deltaTime * _speed);
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, Time.fixedDeltaTime * _speed);
 
-            if (Vector2.Distance(transform.position, _player.transform.position) < 1.0f)
+            if (Vector2.Distance(transform.position, _player.transform.position) > 1.0f)
             {
-                _player.TakeDamage(_damage);
-                Destroy();
+                return;
             }
+            
+            _player.TakeDamage(_damage);
+            Destroy();
         }
 
         public void TakeDamage(int amount)
