@@ -8,23 +8,20 @@ namespace SpaceShooter
         [SerializeField] private int _damage = 1;
         [SerializeField] private float _speed = 1.0f;
 
-        private Transform _player;
+        private Player _player;
 
         void Start()
         {
-            _player = GameManager.Instance.Player.transform;
+            _player = GameManager.Instance.Player;
         }
 
         void Update()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _player.position, Time.deltaTime * _speed);
-        }
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, Time.deltaTime * _speed);
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject.TryGetComponent(out Player player))
+            if (Vector2.Distance(transform.position, _player.transform.position) < 1.0f)
             {
-                player.TakeDamage(_damage);
+                _player.TakeDamage(_damage);
                 Destroy();
             }
         }

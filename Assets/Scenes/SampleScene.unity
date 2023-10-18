@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fb3e6f4b69574499c06e6faa798a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 100
+  _currentHealth: 100000000
   _maxHealth: 0
 --- !u!212 &367688052
 SpriteRenderer:
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b40242e58e760ee4fb83d0c3aa36ce0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _threshold: 50
+  _threshold: 5000
   _currentWave: 1
   _timeWhenToSpawnEnemies: 2.5
   _timeDelayToSpawnNextWave: 10
