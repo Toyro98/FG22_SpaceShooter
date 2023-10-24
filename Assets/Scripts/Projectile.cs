@@ -5,6 +5,7 @@ namespace SpaceShooter
     [RequireComponent(typeof(Rigidbody2D))]
     public class Projectile : MonoBehaviour
     {
+        /*
         [SerializeField] private float _speed = 100.0f;
         [SerializeField] private int _damage = 10;
 
@@ -25,5 +26,6 @@ namespace SpaceShooter
         {
             Destroy(gameObject);
         }
+        */
     }
 }

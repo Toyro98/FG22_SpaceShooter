@@ -4,6 +4,7 @@ namespace SpaceShooter
 {
     public sealed class WaveManager : MonoBehaviour
     {
+        /*
         [Header("Wave")]
         [SerializeField] private int _threshold = 50;
         [SerializeField] private int _currentWave = 1;
@@ -54,5 +55,6 @@ namespace SpaceShooter
                 GameManager.Instance.Player.RestoreHealth();
             }
         }
+        */
     }
 }
