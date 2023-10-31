@@ -4,7 +4,6 @@ namespace SpaceShooter
 {
     public sealed class WaveManager : MonoBehaviour
     {
-        /*
         [Header("Wave")]
         [SerializeField] private int _threshold = 50;
         [SerializeField] private int _currentWave = 1;
@@ -15,7 +14,7 @@ namespace SpaceShooter
 
         [Header("Enemy")]
         [SerializeField] private int _enemiesAlive = 0;
-        [SerializeField] private Enemy _enemyPrefab;
+        [SerializeField] private EnemyMoveJob _enemyPrefab;
 
         private void Start()
         {
@@ -39,7 +38,9 @@ namespace SpaceShooter
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 Vector2 spawnLocation = new Vector2(Random.Range(-100.0f, 100.0f), Random.Range(-100.0f, 100.0f));
-                Instantiate(_enemyPrefab, spawnLocation, Quaternion.identity);
+                var spawnedEnemy = Instantiate(_enemyPrefab, spawnLocation, Quaternion.identity);
+
+                spawnedEnemy.name = "Enemy " + (i + 1);
             }
         }
 
@@ -55,6 +56,5 @@ namespace SpaceShooter
                 GameManager.Instance.Player.RestoreHealth();
             }
         }
-        */
     }
 }
