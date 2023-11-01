@@ -7,6 +7,7 @@ namespace SpaceShooter
         [Header("Wave")]
         [SerializeField] private int _threshold = 50;
         [SerializeField] private int _currentWave = 1;
+        [SerializeField] private float _spawnRadius = 100.0f;
 
         [Header("Time")]
         [SerializeField] private float _timeWhenToSpawnEnemies = 2.5f;
@@ -14,7 +15,7 @@ namespace SpaceShooter
 
         [Header("Enemy")]
         [SerializeField] private int _enemiesAlive = 0;
-        [SerializeField] private EnemyMoveJob _enemyPrefab;
+        [SerializeField] private GameObject _enemyPrefab;
 
         private void Start()
         {
@@ -37,8 +38,8 @@ namespace SpaceShooter
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
-                Vector2 spawnLocation = new Vector2(Random.Range(-100.0f, 100.0f), Random.Range(-100.0f, 100.0f));
-                var spawnedEnemy = Instantiate(_enemyPrefab, spawnLocation, Quaternion.identity);
+                Vector2 spawnLocation = new Vector2(Random.Range(-_spawnRadius, _spawnRadius), Random.Range(-_spawnRadius, _spawnRadius));
+                GameObject spawnedEnemy = Instantiate(_enemyPrefab, spawnLocation, Quaternion.identity);
 
                 spawnedEnemy.name = "Enemy " + (i + 1);
             }

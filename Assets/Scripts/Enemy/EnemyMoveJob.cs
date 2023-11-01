@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
-using Unity.Jobs;
 using UnityEngine;
+using Unity.Jobs;
+using Unity.Collections;
 
 namespace SpaceShooter
 {
@@ -13,31 +11,27 @@ namespace SpaceShooter
         [SerializeField] private int _damage = 1;
         [SerializeField] private float _speed = 1.0f;
 
-        private NativeArray<Vector2> _positionResult;
-
-        private JobHandle _jobHandle;
+        JobHandle _jobHandle;
+        NativeArray<Vector2> _positionResult;
 
         private void Awake()
         {
-            _positionResult = new NativeArray<Vector2>(1, Allocator.Persistent);
-        }
-
-        private void Start()
-        {
             _player = GameManager.Instance.Player;
+            _positionResult = new NativeArray<Vector2>(1, Allocator.Persistent);
         }
 
         public void Update()
         {
-            EnemyJob enemyJob = new EnemyJob(
-                _player.transform.position,
-                _health,
-                _damage,
-                _speed,
-                Time.deltaTime,
-                transform.position,
-                _positionResult
-            );
+            EnemyJob enemyJob = new EnemyJob()
+            {
+                CurrentPosition = transform.position,
+                PlayerPosition = Vector2.zero,
+                Speed = _speed,
+                Health = _health,
+                Damage = _damage,
+                DeltaTime = Time.deltaTime,
+                PositionResult = _positionResult,
+            };
 
             _jobHandle = enemyJob.Schedule();
             _jobHandle.Complete();
