@@ -488,7 +488,8 @@ MonoBehaviour:
   _timeWhenToSpawnEnemies: 2.5
   _timeDelayToSpawnNextWave: 10
   _enemiesAlive: 0
-  _enemyPrefab: {fileID: 5884093398230656038, guid: 03892f61e90d301439226249b83a526b, type: 3}
+  _enemyPrefab: {fileID: 2114238453839962733, guid: 03892f61e90d301439226249b83a526b, type: 3}
+  _enemies: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

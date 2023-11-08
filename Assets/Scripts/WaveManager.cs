@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace SpaceShooter
@@ -15,7 +18,8 @@ namespace SpaceShooter
 
         [Header("Enemy")]
         [SerializeField] private int _enemiesAlive = 0;
-        [SerializeField] private GameObject _enemyPrefab;
+        [SerializeField] private Enemy _enemyPrefab;
+        [SerializeField] private List<Enemy> _enemies;
 
         private void Start()
         {
@@ -29,19 +33,53 @@ namespace SpaceShooter
                 SpawnNewWave();
                 _timeWhenToSpawnEnemies = float.MaxValue;
             }
+
+            if (_enemies.Count == 0)
+            {
+                return;
+            }
+
+            float startTime = Time.realtimeSinceStartup;
+
+            var enemyPosition = new NativeArray<Vector3>(_enemies.Count, Allocator.Persistent);
+
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                enemyPosition[i] = _enemies[i].transform.position;
+            }
+
+            EnemyJob job = new EnemyJob()
+            {
+                CurrentPosition = enemyPosition,
+                PlayerPosition = GameManager.Instance.Player.transform.position,
+                Speed = 1, // Constant speed
+                DeltaTime = Time.deltaTime,
+            };
+
+            job.Schedule(_enemies.Count, 64).Complete();
+
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                _enemies[i].transform.position = enemyPosition[i];
+            }
+
+            enemyPosition.Dispose();
+
+            Debug.Log($"Time: {(Time.realtimeSinceStartup - startTime) * 1000.0f}ms");
         }
 
         public void SpawnNewWave()
         {
             int enemiesToSpawn = _enemiesAlive = _threshold * _currentWave * _currentWave * _currentWave;
-            Debug.Log($"WaveManager: Spawning {enemiesToSpawn} enemies", this);
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 Vector2 spawnLocation = new Vector2(Random.Range(-_spawnRadius, _spawnRadius), Random.Range(-_spawnRadius, _spawnRadius));
-                GameObject spawnedEnemy = Instantiate(_enemyPrefab, spawnLocation, Quaternion.identity);
+                var spawnedEnemy = Instantiate(_enemyPrefab, spawnLocation, Quaternion.identity);
 
                 spawnedEnemy.name = "Enemy " + (i + 1);
+
+                _enemies.Add(spawnedEnemy);
             }
         }
 
