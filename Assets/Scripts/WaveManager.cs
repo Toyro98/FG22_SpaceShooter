@@ -20,6 +20,11 @@ namespace SpaceShooter
         [SerializeField] private int _enemiesAlive = 0;
         [SerializeField] private Enemy _enemyPrefab;
         [SerializeField] private List<Enemy> _enemies;
+        [SerializeField] private List<Enemy> _enemiesToDelete;
+
+        JobHandle _jobHandle;
+        NativeArray<Vector3> _nativeEnemyPosition;
+        NativeArray<float> _nativeDistanceToPlayer;
 
         private void Start()
         {
@@ -39,33 +44,91 @@ namespace SpaceShooter
                 return;
             }
 
-            float startTime = Time.realtimeSinceStartup;
+            UpdateEnemyPosition();
+        }
 
-            var enemyPosition = new NativeArray<Vector3>(_enemies.Count, Allocator.Persistent);
+        private void UpdateEnemyPosition()
+        {
+            int enemiesCount = 0;
 
             for (int i = 0; i < _enemies.Count; i++)
             {
-                enemyPosition[i] = _enemies[i].transform.position;
+                if (_enemies[i] != null)
+                {
+                    enemiesCount++;
+                }
+            }
+
+            _nativeEnemyPosition = new NativeArray<Vector3>(enemiesCount, Allocator.TempJob);
+            _nativeDistanceToPlayer = new NativeArray<float>(enemiesCount, Allocator.TempJob);
+
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                if (_enemies[i] == null)
+                {
+                    continue;
+                }
+
+                _nativeEnemyPosition[i] = _enemies[i].transform.position;
             }
 
             EnemyJob job = new EnemyJob()
             {
-                CurrentPosition = enemyPosition,
+                CurrentPosition = _nativeEnemyPosition,
                 PlayerPosition = GameManager.Instance.Player.transform.position,
                 Speed = 1, // Constant speed
                 DeltaTime = Time.deltaTime,
+                DistanceToPlayer = _nativeDistanceToPlayer
             };
 
-            job.Schedule(_enemies.Count, 64).Complete();
+            _jobHandle = job.Schedule(_enemies.Count, 64);
+        }
+
+        public void LateUpdate()
+        {
+            _jobHandle.Complete();
 
             for (int i = 0; i < _enemies.Count; i++)
             {
-                _enemies[i].transform.position = enemyPosition[i];
+                if (_enemies[i] == null)
+                {
+                    continue;
+                }
+
+                _enemies[i].transform.position = _nativeEnemyPosition[i];
             }
 
-            enemyPosition.Dispose();
+            _nativeEnemyPosition.Dispose();
+            _nativeDistanceToPlayer.Dispose();
 
-            Debug.Log($"Time: {(Time.realtimeSinceStartup - startTime) * 1000.0f}ms");
+            if (_enemiesToDelete.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < _enemiesToDelete.Count; i++)
+            {
+                for (int j = 0; j < _enemies.Count; j++)
+                {
+                    if (_enemies[i] == null)
+                    {
+                        continue;
+                    }
+
+                    if (_enemiesToDelete[i].Id == _enemies[j].Id)
+                    {
+                        Destroy(_enemies[j]);
+                        break;
+                    }
+                }
+            }
+
+            _enemiesToDelete = null;
+        }
+
+        public void RemoveEnemy(Enemy enemy)
+        {
+            _enemiesToDelete.Add(enemy);
         }
 
         public void SpawnNewWave()
@@ -78,6 +141,7 @@ namespace SpaceShooter
                 var spawnedEnemy = Instantiate(_enemyPrefab, spawnLocation, Quaternion.identity);
 
                 spawnedEnemy.name = "Enemy " + (i + 1);
+                spawnedEnemy.Id = i;
 
                 _enemies.Add(spawnedEnemy);
             }
