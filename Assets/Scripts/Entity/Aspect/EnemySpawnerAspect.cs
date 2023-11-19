@@ -46,7 +46,7 @@ namespace SpaceShooter
 
         public void IncreaseWaveDifficulty()
         {
-            int wave = _enemySpawnerProperties.ValueRW.CurrentWaveNumber++;
+            int wave = _enemySpawnerProperties.ValueRW.CurrentWaveNumber += 1;
             _enemySpawnerProperties.ValueRW.NumberOfEnemiesToSpawn = _enemySpawnerProperties.ValueRW.NumberOfEnemiesToSpawn * wave * wave;
         }
     }
