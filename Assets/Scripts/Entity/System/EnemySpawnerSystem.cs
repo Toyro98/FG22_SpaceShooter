@@ -26,14 +26,16 @@ namespace SpaceShooter
             }
 
             enemySpawner.UpdateSpawnTime(float.MaxValue);
+            enemySpawner.IncreaseWaveDifficulty();
+
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
             for (int i = 0; i < enemySpawner.NumberOfEnemiesToSpawn; i++)
             {
-                var enemy = ecb.Instantiate(enemySpawner.EnemyPrefab);
-                var enemyTransform = enemySpawner.GetRandomEnemyTransform();
+                var newEnemy = ecb.Instantiate(enemySpawner.EnemyPrefab);
+                var newEnemyTransform = enemySpawner.SetEnemyTransform();
 
-                ecb.SetComponent(enemy, enemyTransform);
+                ecb.SetComponent(newEnemy, newEnemyTransform);
             }
 
             ecb.Playback(state.EntityManager);

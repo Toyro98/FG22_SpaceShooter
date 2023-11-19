@@ -7,6 +7,7 @@ namespace SpaceShooter
     {
         public float2 SpawnRange;
         public float TimeToSpawnEnemies;
+        public int CurrentWaveNumber;
         public int NumberOfEnemiesToSpawn;
         public Entity EnemyPrefab;
     }

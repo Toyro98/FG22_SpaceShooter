@@ -12,6 +12,7 @@ namespace SpaceShooter
             AddComponent(spawnerEntity, new EnemySpawnerProperties
             {
                 SpawnRange = authoring.SpawnRange,
+                CurrentWaveNumber = authoring.CurrentWaveNumber,
                 TimeToSpawnEnemies = authoring.TimeToSpawnEnemies,
                 NumberOfEnemiesToSpawn = authoring.NumberOfEnemiesToSpawn,
                 EnemyPrefab = GetEntity(authoring.EnemyPrefab, TransformUsageFlags.Dynamic),

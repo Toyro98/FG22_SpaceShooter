@@ -7,10 +7,7 @@ namespace SpaceShooter
     public readonly partial struct EnemySpawnerAspect : IAspect
     {
         public readonly Entity Entity;
-
         private readonly RefRW<LocalTransform> _transform;
-        private LocalTransform Transform => _transform.ValueRO;
-
         private readonly RefRW<EnemySpawnerProperties> _enemySpawnerProperties;
         private readonly RefRW<EnemySpawnerRandom> _enemySpawnerRandom;
 
@@ -18,7 +15,7 @@ namespace SpaceShooter
         public int NumberOfEnemiesToSpawn => _enemySpawnerProperties.ValueRO.NumberOfEnemiesToSpawn;
         public Entity EnemyPrefab => _enemySpawnerProperties.ValueRO.EnemyPrefab;
 
-        public LocalTransform GetRandomEnemyTransform()
+        public LocalTransform SetEnemyTransform()
         {
             return new LocalTransform
             {
@@ -33,8 +30,8 @@ namespace SpaceShooter
             return _enemySpawnerRandom.ValueRW.Value.NextFloat3(Min, Max);
         }
 
-        private float3 Min => Transform.Position - SpawnRange;
-        private float3 Max => Transform.Position + SpawnRange;
+        private float3 Min => _transform.ValueRO.Position - SpawnRange;
+        private float3 Max => _transform.ValueRO.Position + SpawnRange;
         private float3 SpawnRange => new()
         {
             x = _enemySpawnerProperties.ValueRO.SpawnRange.x,
@@ -45,6 +42,12 @@ namespace SpaceShooter
         public void UpdateSpawnTime(float newTime)
         {
             _enemySpawnerProperties.ValueRW.TimeToSpawnEnemies = newTime;
+        }
+
+        public void IncreaseWaveDifficulty()
+        {
+            int wave = _enemySpawnerProperties.ValueRW.CurrentWaveNumber++;
+            _enemySpawnerProperties.ValueRW.NumberOfEnemiesToSpawn = _enemySpawnerProperties.ValueRW.NumberOfEnemiesToSpawn * wave * wave;
         }
     }
 }
