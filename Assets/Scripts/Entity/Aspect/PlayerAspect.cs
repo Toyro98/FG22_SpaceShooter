@@ -10,7 +10,7 @@ namespace SpaceShooter
         public readonly Entity Entity;
 
         private readonly RefRW<LocalTransform> _transform;
-        private readonly RefRW<PlayerProperties> _properties;
+        private readonly RefRO<PlayerProperties> _properties;
 
         public void Move(float deltaTime)
         {
@@ -18,7 +18,7 @@ namespace SpaceShooter
             var rotate = Input.GetAxis("Horizontal") * deltaTime;
 
             _transform.ValueRW.Position += _transform.ValueRW.Up() * forward * _properties.ValueRO.MoveSpeed;
-            _transform.ValueRW.Rotation = math.mul(quaternion.RotateZ(rotate * -_properties.ValueRO.RotationSpeed), _transform.ValueRO.Rotation);
+            _transform.ValueRW.Rotation = math.mul(quaternion.RotateZ(-rotate * _properties.ValueRO.RotationSpeed), _transform.ValueRO.Rotation);
         }
     }
 }

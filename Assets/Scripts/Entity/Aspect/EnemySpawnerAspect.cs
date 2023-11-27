@@ -7,6 +7,7 @@ namespace SpaceShooter
     public readonly partial struct EnemySpawnerAspect : IAspect
     {
         public readonly Entity Entity;
+
         private readonly RefRW<LocalTransform> _transform;
         private readonly RefRW<EnemySpawnerProperties> _enemySpawnerProperties;
         private readonly RefRW<EnemySpawnerRandom> _enemySpawnerRandom;
