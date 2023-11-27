@@ -42,9 +42,6 @@ namespace SpaceShooter
         }
 
         [BurstCompile]
-        public void OnDestory(ref SystemState state)
-        {
-
-        }
+        public void OnDestory(ref SystemState state) {}
     }
 }

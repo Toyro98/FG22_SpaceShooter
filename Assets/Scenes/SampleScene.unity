@@ -156,10 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d205af2129afc47a931f6a6bb843d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throttlePower: 5
-  _rotationPower: 5
-  _fireRate: 0.1
-  _projectilePrefab: {fileID: 0}
 --- !u!50 &367688049
 Rigidbody2D:
   serializedVersion: 4
@@ -214,8 +210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fb3e6f4b69574499c06e6faa798a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 100
-  _maxHealth: 0
 --- !u!212 &367688052
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -327,7 +321,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Camera
@@ -410,20 +403,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14891483d1d4bf64bb0def11ae64be9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 367688050}
-  _damping: 0.75
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,74 +447,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1 &642946409
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 642946411}
-  - component: {fileID: 642946410}
-  - component: {fileID: 642946412}
-  m_Layer: 0
-  m_Name: Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &642946410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642946409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e7fbe377d5ac974d9089694fc8e3edc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 367688051}
-  WaveManager: {fileID: 642946412}
---- !u!4 &642946411
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642946409}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &642946412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642946409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b40242e58e760ee4fb83d0c3aa36ce0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _threshold: 5000
-  _currentWave: 1
-  _spawnRadius: 100
-  _timeWhenToSpawnEnemies: 2.5
-  _timeDelayToSpawnNextWave: 10
-  _enemiesAlive: 0
-  _enemyPrefab: {fileID: 2114238453839962733, guid: 03892f61e90d301439226249b83a526b, type: 3}
-  _enemies: []
-  _enemiesToDelete: []
 --- !u!1 &801539314
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +504,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 642946411}
   - {fileID: 519420032}
   - {fileID: 367688050}
   - {fileID: 801539316}

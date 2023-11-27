@@ -8,10 +8,7 @@ namespace SpaceShooter
     public partial struct EnemySystem : ISystem
     {
         [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
-
-        }
+        public void OnCreate(ref SystemState state) {}
 
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
@@ -28,9 +25,6 @@ namespace SpaceShooter
         }
 
         [BurstCompile]
-        public void OnDestory(ref SystemState state)
-        {
-
-        }
+        public void OnDestory(ref SystemState state) {}
     }
 }

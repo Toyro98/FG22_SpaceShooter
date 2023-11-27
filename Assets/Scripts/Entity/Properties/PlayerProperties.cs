@@ -1,8 +1,8 @@
-using UnityEngine;
+using Unity.Entities;
 
 namespace SpaceShooter
 {
-    public class Player : MonoBehaviour
+    public struct PlayerProperties : IComponentData
     {
         public float MoveSpeed;
         public float RotationSpeed;

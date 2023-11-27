@@ -7,7 +7,6 @@ namespace SpaceShooter
     public static class Extensions
     {
         // https://forum.unity.com/threads/is-there-an-analogue-of-movetowards-in-entities.1416837/#post-8908944
-        [BurstCompile]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float3 MoveTowards(float3 current, float3 target, float maxDistanceDelta)
         {
