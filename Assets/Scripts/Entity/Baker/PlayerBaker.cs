@@ -11,7 +11,11 @@ namespace SpaceShooter
             AddComponent(playerEntity, new PlayerProperties
             {
                 MoveSpeed = authoring.MoveSpeed,
-                RotationSpeed = authoring.RotationSpeed
+                RotationSpeed = authoring.RotationSpeed,
+
+                FireRate = authoring.FireRate,
+                LastTimeFired = authoring.LastTimeFired,
+                ProjectilePrefab = GetEntity(authoring.ProjectilePrefab, TransformUsageFlags.Dynamic)
             });
 
             AddComponent<PlayerTag>(playerEntity);

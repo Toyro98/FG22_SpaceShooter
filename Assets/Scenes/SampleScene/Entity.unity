@@ -170,6 +170,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 5
   RotationSpeed: 3
+  FireRate: 0.2
+  LastTimeFired: 0
+  ProjectilePrefab: {fileID: 1292769333752485232, guid: a511e37b3b914c74db804d792745faf8, type: 3}
 --- !u!1 &717936527
 GameObject:
   m_ObjectHideFlags: 0

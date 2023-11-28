@@ -6,5 +6,9 @@ namespace SpaceShooter
     {
         public float MoveSpeed;
         public float RotationSpeed;
+
+        public float FireRate;
+        public float LastTimeFired;
+        public Entity ProjectilePrefab;
     }
 }
