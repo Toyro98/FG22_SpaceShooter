@@ -1,20 +1,16 @@
 using Unity.Collections;
-using Unity.Burst;
 using Unity.Entities;
 
 namespace SpaceShooter
 {
-    [BurstCompile]
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial struct EnemySpawnerSystem : ISystem
     {
-        [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<EnemySpawnerProperties>();
         }
 
-        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var enemySpawnerEntity = SystemAPI.GetSingletonEntity<EnemySpawnerProperties>();
@@ -41,7 +37,6 @@ namespace SpaceShooter
             ecb.Playback(state.EntityManager);
         }
 
-        [BurstCompile]
         public void OnDestory(ref SystemState state) {}
     }
 }
