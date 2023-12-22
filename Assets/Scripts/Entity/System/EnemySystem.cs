@@ -5,7 +5,10 @@ namespace SpaceShooter
 {
     public partial struct EnemySystem : ISystem
     {
-        public void OnCreate(ref SystemState state) {}
+        public void OnCreate(ref SystemState state) 
+        {
+            state.RequireForUpdate<EnemySpawnerProperties>();
+        }
 
         public void OnUpdate(ref SystemState state)
         {
